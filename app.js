@@ -157,14 +157,23 @@ function setupButtonEvents() {
   presentButton.addEventListener("mousedown", (event) => {
     presentButtonImg.src = "https://imgur.com/DuDFCcy.png";
   });
+  presentButton.addEventListener("touchstart", (event) => {
+    presentButtonImg.src = "https://imgur.com/DuDFCcy.png";
+  });
 
   var openingButtonImg = getSheet("openingButtonImg");
   openingButton.addEventListener("mousedown", (event) => {
     openingButtonImg.src = "https://imgur.com/Syo2vGP.png";
   });
+  openingButton.addEventListener("touchstart", (event) => {
+    openingButtonImg.src = "https://imgur.com/Syo2vGP.png";
+  });
 
   var fastButtonImage = getSheet("fastButtonImage");
   getSheet("fastButton").addEventListener("mousedown", (event) => {
+    fastButtonImage.src = "https://imgur.com/oslynL3.png";
+  });
+  getSheet("fastButton").addEventListener("touchstart", (event) => {
     fastButtonImage.src = "https://imgur.com/oslynL3.png";
   });
 
@@ -173,7 +182,10 @@ function setupButtonEvents() {
       var childImg = element.children[0];
       element.addEventListener("mousedown", (event) => {
         childImg.src = "https://imgur.com/Pzatwzx.png";
-    });
+      });
+      element.addEventListener("touchstart", (event) => {
+        childImg.src = "https://imgur.com/Pzatwzx.png";
+      });
   });
 
   var previousButtons = document.querySelectorAll('.previousButton');
@@ -181,7 +193,10 @@ function setupButtonEvents() {
       var childImg = element.children[0];
       element.addEventListener("mousedown", (event) => {
         childImg.src = "https://imgur.com/GSBQYXH.png";
-    });
+      });
+      element.addEventListener("touchstart", (event) => {
+        childImg.src = "https://imgur.com/GSBQYXH.png";
+      });
   });
 
   var nextButtons = document.querySelectorAll('.nextButton');
@@ -189,10 +204,16 @@ function setupButtonEvents() {
       var childImg = element.children[0];
       element.addEventListener("mousedown", (event) => {
         childImg.src = "https://imgur.com/IgT04fq.png";
-    });
+      });
+      element.addEventListener("touchstart", (event) => {
+        childImg.src = "https://imgur.com/IgT04fq.png";
+      });
   });
 
   window.addEventListener('mouseup', function(event) {
+    resetButtonImgSources();
+  })
+  window.addEventListener('touchend', function(event) {
     resetButtonImgSources();
   })
 }
