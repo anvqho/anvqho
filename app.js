@@ -49,6 +49,13 @@ var numPrint = 0;
 
 window.ondragstart = function() { return false; } 
 
+let allImages = document.querySelectorAll("img");
+allImages.forEach((value)=>{
+    value.oncontextmenu = (e)=>{
+        e.preventDefault();
+    }
+})
+
 function setupFixedMargin() {
 
   var fixedClasses = document.querySelectorAll('.fixedClass');
