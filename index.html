@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width; initial-scale=1.0;">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+  <div class="passwordContainer">
+    <div class="login-box">
+      <h2>Login</h2>
+      <form action="" method="post">
+        <div class="user-box">
+          <input type="text" name="" id="username" required="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')";/>
+          <label>Username</label>
+        </div>
+        <div class="user-box">
+          <input type="password" name="" id="password" required="" autocomplete="off" readonly onfocus="this.removeAttribute('readonly')";/>
+          <label>Password</label>
+          <span class="password-toggle-icon"><i class="fas fa-eye"></i></span>
+        </div>
+        <a href="#" onclick="validatePassword()">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          Submit
+        </a>
+      </form>
+    </div>
+  </div>
+  <div class="fixedClass container" style="display:none;">
+    <div class="fixedClass"id="cardLocation">
+      <button id="openingButton" style="display:none;" onclick="toggleOpeningButton()">
+        <img id="openingButtonImg" src="https://imgur.com/zEkeHoX.png" alt="buttonpng" border="0" />
+      </button>
+      <div class="fixedClass" id="openingAnimation" style="display:none"></div>
+      <div class="fixedClass" id="flipNextAnimation" style="display:none"></div>
+      <div class="fixedClass"id="flipPreviousAnimation" style="display:none"></div>
+      <div class="fixedClass" id="pageOneAnimation" style="display:none"></div>
+      <div class="fixedClass" id="pageOneCombo" style="display:none;">
+        <div class="buttonWrapper" style="z-index: 20;">
+          <button class="placeHolderButton">
+            <img class="buttonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="closeButton" onclick="closeCard()">
+            <img class="buttonImage closeButtonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="nextButton" onclick="flipPage(1, 2)">
+            <img class="buttonImage nextButtonImage" src="https://imgur.com/WS5iGvM.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+        </div>
+        <div class="fixedClass" id="pageOneStatic"></div>
+      </div>
+      <div class="fixedClass" id="pageTwoAnimation" style="display:none"></div>
+      <div class="fixedClass" id="fastButtonWrapper" style="display:none;">
+        <div id="fastButtonInnerWrapper" style="z-index: 19;position: absolute;text-align: center;">
+          <button class="placeHolderButton" onclick="flipPage(2, 1)">
+            <img class="buttonImage previousButtonImage" src="https://imgur.com/fWYpT3W.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="placeHolderButton" onclick="closeCard()">
+            <img class="buttonImage closeButtonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button id="fastButton" onclick="stopAnimateCurrentPage()">
+            <img class="buttonImage" id="fastButtonImage" src="https://imgur.com/IUrRxYJ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+        </div>
+      </div>
+      <div class="fixedClass" id="pageTwoCombo" style="display:none">
+        <div class="buttonWrapper" style="z-index: 20;">
+          <button class="previousButton" onclick="flipPage(2, 1)">
+            <img class="buttonImage previousButtonImage" src="https://imgur.com/fWYpT3W.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="closeButton" onclick="closeCard()">
+            <img class="buttonImage closeButtonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="nextButton" onclick="flipPage(2, 3)">
+            <img class="buttonImage nextButtonImage" src="https://imgur.com/WS5iGvM.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+        </div>
+        <div class="fixedClass" id="pageTwoStatic"></div>
+      </div>
+      <div class="fixedClass" id="pageThreeAnimation" style="display:none"></div>
+      <div class="fixedClass" id="pageThreeCombo" style="display:none">
+        <div class="buttonWrapper" style="z-index: 20;">
+          <button class="previousButton" onclick="flipPage(3, 2)">
+            <img class="buttonImage previousButtonImage" src="https://imgur.com/fWYpT3W.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="closeButton" onclick="closeCard()">
+            <img class="buttonImage closeButtonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+          <button class="placeHolderButton">
+            <img class="buttonImage" src="https://imgur.com/8OWxGXZ.png" alt="buttonpng" margin="0" border="0" />
+          </button>
+        </div>
+        <button id="presentButton" onclick="openPresent()">
+          <img id="presentButtonImg" src="https://imgur.com/WOX7cwC.png" alt="buttonpng" margin="0" border="0" />
+        </button>
+        <div class="fixedClass" id="pageThreeStatic"></div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript" src="app.js"></script>
+</body>
+
+</html>
