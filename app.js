@@ -98,7 +98,7 @@ function getFrames(type) {
     case "pageTwoAnimation":
       return 69;
     case "pageThreeAnimation":
-      return 49;
+      return 61;
     case "openingAnimation":
       return 18;
     case "closingAnimation":
