@@ -493,15 +493,8 @@ function copy(text) {
 }
 
 async function openPresent() {
-  try {
-    await copy("https://www.humblebundle.com/?gift=bF3HAeV4e7mHVVe2");
-    await sleep(100);
-    alert("Link copied to clipboard, paste in your browser and enjoy ;)");
-  }
-  catch(e) {
-    await sleep(100);
-    alert("Paste this into your browser and enjoy ;) - https://www.humblebundle.com/?gift=bF3HAeV4e7mHVVe2");
-  }
+  await sleep(100);
+  alert("Paste this into your browser and enjoy ;) - https://www.humblebundle.com/?gift=bF3HAeV4e7mHVVe2");
 }
 
 function validatePassword() {
