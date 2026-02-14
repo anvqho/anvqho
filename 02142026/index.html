@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { 
+      margin: 0; 
+      padding: 0; 
+      background-image: url('pictures/background.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+    #images { display: flex; align-items: center; justify-content: center; padding: 10px; }
+    #images img { max-width: calc(100% - 20px); max-height: calc(100% - 20px); object-fit: contain; border: 10px solid rgba(255, 255, 255, 0.8); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
+    #prompts { display: flex; }
+    #left, #right { width: 50%; display: flex; align-items: center; justify-content: center; }
+    #continueBtn, #previousBtn { height: 50%; width: 80%; font-size: 10vh; border-radius: 20px; background-color: pink; border: 10px solid white; color: white; }
+    #continueBtn:active, #previousBtn:active { transform: scale(0.95); opacity: 0.8; }
+  </style>
+  <script>
+    let horizontal = window.innerHeight >= window.innerWidth;
+    window.addEventListener('resize', () => {
+      horizontal = window.innerHeight >= window.innerWidth;
+    });
+    
+    const pictureIterator = (() => {
+      const order = ['Hello', 'Filler', 'BeginningQuestion', 'Question', 'QuestionIfNo'];
+      const yesOrder = ['yay', 'thank', 'proceed'];
+      let index = 0;
+      let useYesOrder = false;
+      
+      return {
+        next: () => {
+          const currentOrder = useYesOrder ? yesOrder : order;
+          if (index < currentOrder.length - 1) index++;
+          return `pictures/${currentOrder[index]}.png`;
+        },
+        previous: () => {
+          const currentOrder = useYesOrder ? yesOrder : order;
+          if (index > 0) index--;
+          return `pictures/${currentOrder[index]}.png`;
+        },
+        current: () => {
+          const currentOrder = useYesOrder ? yesOrder : order;
+          return `pictures/${currentOrder[index]}.png`;
+        },
+        getCurrentName: () => {
+          const currentOrder = useYesOrder ? yesOrder : order;
+          return currentOrder[index];
+        },
+        switchToYesOrder: () => {
+          useYesOrder = true;
+          index = 0;
+        }
+      };
+    })();
+    
+    window.addEventListener('DOMContentLoaded', () => {
+      const imagesHeight = Math.floor(window.innerHeight * 0.7);
+      const imagesDiv = document.getElementById('images');
+      const promptsDiv = document.getElementById('prompts');
+      
+      imagesDiv.style.height = imagesHeight + 'px';
+      imagesDiv.style.width = window.innerWidth + 'px';
+      
+      promptsDiv.style.height = (window.innerHeight - imagesHeight) + 'px';
+      promptsDiv.style.width = window.innerWidth + 'px';
+      
+      const img = document.createElement('img');
+      img.src = pictureIterator.current();
+      imagesDiv.appendChild(img);
+      
+      const previousBtn = document.getElementById('previousBtn');
+      const continueBtn = document.getElementById('continueBtn');
+      const leftDiv = document.getElementById('left');
+      const rightDiv = document.getElementById('right');
+      let buttonsChanged = false;
+      let yesMode = false;
+      let yesScale = 1;
+      let noScale = 1;
+      
+      const updateButtons = () => {
+        if (pictureIterator.getCurrentName() === 'Question' && !buttonsChanged) {
+          previousBtn.textContent = 'Yes';
+          continueBtn.textContent = 'No';
+          buttonsChanged = true;
+        }
+      };
+      
+      updateButtons();
+      
+      document.getElementById('continueBtn').onclick = () => {
+        if (buttonsChanged && !yesMode) {
+          noScale *= 0.7;
+          yesScale *= 1.3;
+          continueBtn.style.transform = `scale(${noScale})`;
+          previousBtn.style.transform = `scale(${yesScale})`;
+          
+          const yesWidth = previousBtn.offsetWidth * yesScale;
+          const leftWidth = leftDiv.offsetWidth;
+          
+          if (yesWidth > leftWidth * 0.8) {
+            const newLeftWidth = (yesWidth / 0.8);
+            const newImagesHeight = window.innerHeight - promptsDiv.offsetHeight;
+            leftDiv.style.width = newLeftWidth + 'px';
+            rightDiv.style.width = (window.innerWidth - newLeftWidth) + 'px';
+            imagesDiv.style.height = newImagesHeight + 'px';
+          }
+          img.src = pictureIterator.next();
+        } else if (yesMode) {
+          if (pictureIterator.getCurrentName() === 'proceed') {
+            // Remove all divs
+            imagesDiv.remove();
+            promptsDiv.remove();
+            
+            // Create and add video
+            const video = document.createElement('video');
+            video.src = 'Shark.mp4';
+            video.controls = true;
+            video.style.width = '100vw';
+            video.style.height = '100vh';
+            video.style.objectFit = 'contain';
+            document.body.appendChild(video);
+          } else {
+            img.src = pictureIterator.next();
+          }
+        } else {
+          img.src = pictureIterator.next();
+        }
+        updateButtons();
+      };
+      
+      document.getElementById('previousBtn').onclick = () => {
+        if (buttonsChanged) {
+          // Reset sizes
+          continueBtn.style.transform = 'scale(1)';
+          previousBtn.style.transform = 'scale(1)';
+          leftDiv.style.width = '50%';
+          rightDiv.style.width = '50%';
+          imagesDiv.style.height = Math.floor(window.innerHeight * 0.7) + 'px';
+          
+          // Remove Yes button and add new Previous button
+          previousBtn.remove();
+          const newPreviousBtn = document.createElement('button');
+          newPreviousBtn.id = 'previousBtn';
+          newPreviousBtn.textContent = 'Previous';
+          leftDiv.appendChild(newPreviousBtn);
+          
+          continueBtn.textContent = 'Continue';
+          yesMode = true;
+          
+          // Switch to yes order
+          pictureIterator.switchToYesOrder();
+          img.src = pictureIterator.current();
+          
+          // Add click handler for new Previous button
+          newPreviousBtn.onclick = () => {
+            img.src = pictureIterator.previous();
+          };
+        } else {
+          img.src = pictureIterator.previous();
+          updateButtons();
+        }
+      };
+    });
+  </script>
+</head>
+<body>
+  <div id="images"></div>
+  <div id="prompts">
+    <div id="left">
+      <button id="previousBtn">Previous</button>
+    </div>
+    <div id="right">
+      <button id="continueBtn">Continue</button>
+    </div>
+  </div>
+</body>
+</html>
