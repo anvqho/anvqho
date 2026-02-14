@@ -16,7 +16,7 @@
     #images img { max-width: calc(100% - 20px); max-height: calc(100% - 20px); object-fit: contain; border: 10px solid rgba(255, 255, 255, 0.8); border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
     #prompts { display: flex; }
     #left, #right { width: 50%; display: flex; align-items: center; justify-content: center; }
-    #continueBtn, #previousBtn { height: 50%; width: 80%; font-size: 10vh; border-radius: 20px; background-color: pink; border: 10px solid white; color: white; }
+    #continueBtn, #previousBtn { height: 50%; width: 90%; font-size: 10vh; border-radius: 20px; background-color: pink; border: 10px solid white; color: white; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     #continueBtn:active, #previousBtn:active { transform: scale(0.95); opacity: 0.8; }
   </style>
   <script>
@@ -145,10 +145,10 @@
           previousBtn.remove();
           const newPreviousBtn = document.createElement('button');
           newPreviousBtn.id = 'previousBtn';
-          newPreviousBtn.textContent = 'Previous';
+          newPreviousBtn.textContent = 'Prev';
           leftDiv.appendChild(newPreviousBtn);
           
-          continueBtn.textContent = 'Continue';
+          continueBtn.textContent = 'Cont';
           yesMode = true;
           
           // Switch to yes order
@@ -171,10 +171,10 @@
   <div id="images"></div>
   <div id="prompts">
     <div id="left">
-      <button id="previousBtn">Previous</button>
+      <button id="previousBtn">Prev</button>
     </div>
     <div id="right">
-      <button id="continueBtn">Continue</button>
+      <button id="continueBtn">Cont</button>
     </div>
   </div>
 </body>
